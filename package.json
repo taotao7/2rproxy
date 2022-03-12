@@ -10,7 +10,8 @@
     "format": "prettier --loglevel warn --write \"**/*.{ts,tsx,css,md}\"",
     "posttest": "npm run format",
     "lint": "eslint . --cache --fix --ext .ts,.tsx",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "commit": "git cz"
   },
   "keywords": [
     "proxy"
@@ -18,10 +19,14 @@
   "author": "taotao7",
   "license": "MIT",
   "devDependencies": {
+    "@commitlint/cli": "^16.2.1",
+    "@commitlint/config-angular": "^16.2.1",
+    "@commitlint/config-conventional": "^16.2.1",
     "@types/debug": "^4.1.7",
     "@types/node": "^17.0.21",
     "@typescript-eslint/eslint-plugin": "^5.14.0",
     "@typescript-eslint/parser": "^5.14.0",
+    "cz-conventional-changelog": "^3.3.0",
     "eslint": "^8.11.0",
     "eslint-config-prettier": "^8.5.0",
     "husky": ">=6",
@@ -36,5 +41,15 @@
   "lint-staged": {
     "*.{ts,tsx}": "eslint --cache --fix",
     "*.{ts,tsx,css,md}": "prettier --write"
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  },
+  "husky": {
+    "hooks": {
+      "lint-staged": "lint-staged"
+    }
   }
 }

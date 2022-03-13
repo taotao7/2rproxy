@@ -16,6 +16,7 @@
     "node_modules",
     "dist/**/*",
     "commitlint.config.js",
-    "changelog.config.js"
+    "changelog.config.js",
+    "test/**/*"
   ]
 }

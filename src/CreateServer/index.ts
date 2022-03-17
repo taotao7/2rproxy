@@ -4,17 +4,12 @@ import * as url from "url";
 
 import debug from "debug";
 
-interface Server {
-	port: number;
-	startService: Function;
-}
-
 type UrlMappingType = {
 	target: string;
 	url: string;
 };
 
-class CreateServer implements Server {
+class CreateServer {
 	port: number;
 	server: express.Application;
 	maintainer: any;
@@ -62,15 +57,18 @@ class CreateServer implements Server {
 			"get",
 			"/*",
 			(req: express.Request, res: express.Response) => {
+				//TODO 多个urlMapping设置
 				if (this.urlMapping[0].url === req.url) {
 					console.log(`${this.urlMapping[0].target}:8080${req.url}`);
+					const copyHeaders = Object.assign({}, req.headers);
 					this.proxyRequest(
 						"get",
-						`http://${this.urlMapping[0].target}:8080${req.url}`
+						`http://${this.urlMapping[0].target}:8080${req.url}`,
+						{ headers: copyHeaders }
 					)
 						.then((r) => {
 							console.log("from target server", r.data);
-							// TODO 解析返回的头和其他参数给客户端
+							res.set(r.headers);
 							res.send(r.data);
 						})
 						.catch((e) => {
